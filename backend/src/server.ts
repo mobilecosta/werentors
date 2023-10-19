@@ -1,20 +1,16 @@
-import Fastify from 'fastify';
-import fastifyCors from '@fastify/cors';
+import express from 'express';
+import cors from 'cors';
+import { server } from "./lib/server-data"
+import { UserController } from './controllers/users';
 
-const fastify = Fastify({ logger: true });
+const app = express();
 
-fastify.register(fastifyCors, {
-    origin: '*',
-});
+const usercontroller = new UserController();
 
-const port = 3000
-const host = '0.0.0.0'
+app.use(cors());
 
-fastify.get('/', (request, reply) => {
-    reply.send({ test: 'test' })
+app.get('/', usercontroller.test)
+
+app.listen(server, () => {
+    console.log(`Server is running at port ${server.port}`)
 })
-
-fastify.listen({
-    port,
-    host,
-}).then(() => {console.log(`Server is running at port ${port}`)})

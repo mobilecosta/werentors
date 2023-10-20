@@ -6,3 +6,5 @@ export const server = {
 }
 
 export const saltRounds = parseInt(process.env.PASSWORD_SALT_VALUE || "10");
+
+export const secretKey = process.env.JWT_SECRET_KEY || ""

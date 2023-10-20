@@ -3,9 +3,9 @@ import { UserService } from '../services/users.service';
 import { userSchema } from '../schema/users.schema';
 import { ZodError } from "zod";
 import { fromZodError } from "zod-validation-error";
-import { saltRounds } from '../lib/server-data';
+import { saltRounds, secretKey } from '../lib/server-data';
 
-const userService = new UserService(saltRounds);
+const userService = new UserService(saltRounds, secretKey);
 
 export class UserController {
     constructor() {
@@ -27,7 +27,13 @@ export class UserController {
     }
 
     async signIn(request: Request, response: Response, next: NextFunction) {
-            const users = await userService.signIn()
-            return response.send(users)
+        const { username, password } = request.body;
+        try {
+            const token = await userService.signIn({ username, password })
+            return response.send(token)
+        } catch (error) {
+            console.log('controller: ' + error)
+            next(error);
+        }
     }
 }

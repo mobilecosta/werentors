@@ -17,3 +17,8 @@ export const createUserSchema = z.object({
     username: z.string(),
     password: z.string().regex(passwordRegex),
 })
+
+export const signInUserSchema = z.object({
+    username: z.string(),
+    password: z.string().regex(passwordRegex)
+})

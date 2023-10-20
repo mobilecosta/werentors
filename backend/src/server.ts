@@ -1,15 +1,22 @@
 import express from 'express';
+import 'express-async-errors';
 import cors from 'cors';
+import bodyParser from 'body-parser';
 import { server } from "./lib/server-data"
-import { UserController } from './controllers/users';
-
-const app = express();
+import { UserController } from './controllers/users.controller';
+import { errorHandling } from './middlawares/error.middlawarer';
 
 const usercontroller = new UserController();
 
-app.use(cors());
+const app = express();
 
-app.get('/', usercontroller.test)
+app.use(cors());
+app.use(bodyParser.json())
+
+app.post('/signup', usercontroller.signUp)
+app.post('/signin', usercontroller.signIn)
+
+app.use(errorHandling)
 
 app.listen(server, () => {
     console.log(`Server is running at port ${server.port}`)

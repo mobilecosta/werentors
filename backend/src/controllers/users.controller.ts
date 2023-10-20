@@ -3,8 +3,9 @@ import { UserService } from '../services/users.service';
 import { userSchema } from '../schema/users.schema';
 import { ZodError } from "zod";
 import { fromZodError } from "zod-validation-error";
+import { saltRounds } from '../lib/server-data';
 
-const userService = new UserService();
+const userService = new UserService(saltRounds);
 
 export class UserController {
     constructor() {
@@ -16,7 +17,8 @@ export class UserController {
         try {
             const user = request.body;
             userSchema.parse(user)
-            return response.send(user)
+            const createUser = userService.signUp(user)
+            return response.send(createUser)
         } catch (error) {
             // z.setErrorMap(errorMap)
             const validationError = fromZodError(error as ZodError);

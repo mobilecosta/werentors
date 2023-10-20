@@ -4,9 +4,16 @@ const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[$*&@#])[0-9a-zA-Z$*&
 
 export const userSchema = z.object({
     id: z.string().uuid().optional(),
-    createdAt: z.date().optional(),
     email: z.string().email(),
     name: z.string(),
-    username: z.string().optional(),
+    username: z.string(),
+    password: z.string().regex(passwordRegex),
+    createdAt: z.date().optional(),
+})
+
+export const createUserSchema = z.object({
+    email: z.string().email(),
+    name: z.string(),
+    username: z.string(),
     password: z.string().regex(passwordRegex),
 })

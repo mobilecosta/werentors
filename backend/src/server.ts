@@ -4,7 +4,7 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import { server } from "./lib/server-data"
 import { UserController } from './controllers/users.controller';
-import { errorHandling } from './middlawares/error.middlawarer';
+import { errorHandling } from './middlawares/error.middleware';
 
 const usercontroller = new UserController();
 

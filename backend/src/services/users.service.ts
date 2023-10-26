@@ -40,7 +40,9 @@ export class UserService {
                 throw new Error('Wrong Password!')
             // Fazer o sistema do jwt no service e colocar o sistema de cookies no controler
             const payload = { id: user.id, email: user.email, name: user.name, username: user.username };
-            const token = jwt.sign(payload, this.secretKey)
+            // Need to implement jwt options
+            
+            const token = jwt.sign(payload, this.secretKey, { expiresIn: '24h' })
             return token
         } catch(error) {
             console.log(error)

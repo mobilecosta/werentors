@@ -30,7 +30,7 @@ export class UserController {
         const { username, password } = request.body;
         try {
             const token = await userService.signIn({ username, password })
-            return response.send(token)
+            return response.send({ token })
         } catch (error) {
             console.log('controller: ' + error)
             next(error);

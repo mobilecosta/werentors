@@ -30,7 +30,8 @@ export class UserController {
         const { username, password } = request.body;
         try {
             const token = await userService.signIn({ username, password })
-            return response.send({ token })
+            response.header('Authorization', `Bearer ${token}`);
+            return response.send({ message: 'Autenticação bem sucedida!', token })
         } catch (error) {
             console.log('controller: ' + error)
             next(error);
